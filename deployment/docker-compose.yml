@@ -1,0 +1,21 @@
+version: "3.8"
+services:
+    mysql:
+        image: mysql:5.6
+        platform: linux/amd64
+        container_name: mysql
+        ports:
+            - "3306:3306"
+        environment:
+            - MYSQL_ROOT_PASSWORD=123456
+            - MYSQL_DATABASE=dev_database
+        command: --init-file /data/application/init.sql
+        volumes:
+            - ../db/dbdata:/var/lib/mysql
+            - ../db/my.cnf/config.cnf:/etc/mysql/conf.d/my.cnf
+            - ../migrate/database.sql:/data/application/init.sql
+        networks:
+            - default
+
+volumes:
+    db:
